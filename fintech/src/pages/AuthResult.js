@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import HeaderComponent from "../components/HeaderComponent";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
@@ -8,6 +8,9 @@ const AuthResult = () => {
   const queryParams = useLocation().search;
   const parsed = queryString.parse(queryParams);
   const code = parsed.code;
+
+  const [accessToken, setAccessToken] = useState("");
+  const [userSeqNo, setUserSeqNo] = useState("");
 
   const handleClick = () => {
     let requestOption = {
@@ -24,8 +27,12 @@ const AuthResult = () => {
         grant_type: "authorization_code",
       },
     };
-    axios(requestOption).then((response) => {
-      console.log(response);
+    axios(requestOption).then(({ data }) => {
+      setAccessToken(data.access_token);
+      setUserSeqNo(data.user_seq_no);
+      localStorage.setItem("accessToken", data.access_token);
+      localStorage.setItem("userSeqNo", data.user_seq_no);
+      console.log(data);
     });
   };
 
@@ -34,6 +41,8 @@ const AuthResult = () => {
       <HeaderComponent title={"토큰 발급 / 인증"} />
       <p>사용자 인증 코드 : {code}</p>
       <button onClick={handleClick}>토큰 발급하기</button>
+      <p>accessToken : {accessToken}</p>
+      <p>userSeqNo : {userSeqNo}</p>
     </div>
   );
 };
