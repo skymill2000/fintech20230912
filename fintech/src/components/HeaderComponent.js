@@ -8,7 +8,7 @@ const StyledHeader = styled.header`
   padding: 10px 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   color: white;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 `;
@@ -36,17 +36,10 @@ const Nav = styled.nav`
   }
 `;
 
-const HeaderComponent = () => {
+const HeaderComponent = ({ title }) => {
   return (
     <StyledHeader>
-      <Logo>MyApp</Logo>
-      <Nav>
-        <ul>
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
-        </ul>
-      </Nav>
+      <Logo>{title}</Logo>
     </StyledHeader>
   );
 };
