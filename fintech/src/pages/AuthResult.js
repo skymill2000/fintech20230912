@@ -11,7 +11,7 @@ const AuthResult = () => {
 
   const handleClick = () => {
     let requestOption = {
-      url: "https://testapi.openbanking.or.kr/oauth/2.0/token",
+      url: "/oauth/2.0/token",
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
