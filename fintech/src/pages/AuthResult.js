@@ -11,15 +11,20 @@ const AuthResult = () => {
 
   const handleClick = () => {
     let requestOption = {
-      //메뉴얼보고작성
-      url: "",
+      url: "https://testapi.openbanking.or.kr/oauth/2.0/token",
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
       },
-      data: {},
+      data: {
+        code: code,
+        client_id: "9c785a50-ac39-4dac-af61-eb82eb80e139",
+        client_secret: "93b9698e-14a8-4462-9f76-6fe06e0250de",
+        redirect_uri: "http://localhost:3000/authResult",
+        grant_type: "authorization_code",
+      },
     };
-    axios(option).then((response) => {
+    axios(requestOption).then((response) => {
       console.log(response);
     });
   };
