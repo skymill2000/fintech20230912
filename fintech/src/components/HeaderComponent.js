@@ -18,24 +18,6 @@ const Logo = styled.div`
   font-weight: bold;
 `;
 
-const Nav = styled.nav`
-  ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    gap: 20px;
-
-    li {
-      cursor: pointer;
-      transition: opacity 0.2s;
-
-      &:hover {
-        opacity: 0.7;
-      }
-    }
-  }
-`;
-
 const HeaderComponent = ({ title }) => {
   return (
     <StyledHeader>

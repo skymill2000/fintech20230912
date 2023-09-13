@@ -10,10 +10,6 @@ const MainPage = () => {
     // 주소 설정
     const authorizeUrl = `https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=${clientId}&redirect_uri=http://localhost:3000/authResult&scope=login%20inquiry%20transfer&state=12345678901234567890123456789012&auth_type=0`;
 
-    // 새 창의 위치를 지정하지 않으면 기본적으로 중앙에 열립니다.
-    // 만약 위치를 지정하려면 다음과 같이 사용할 수 있습니다.
-    // const windowOptions = 'width=800,height=600,left=100,top=100';
-
     // 새 창을 열고 주소로 이동
     newWindow.location.href = authorizeUrl;
   };
