@@ -16,9 +16,10 @@ const NewsSearch = () => {
   const handleClick = () => {
     console.log("hello");
     // axios 요청 작성하기
+    const apiKey = "";
     axios
       .get(
-        `https://newsapi.org/v2/everything?q=${searchValue}&from=2023-08-13&sortBy=publishedAt&apiKey=78bc6ddd8cdb48ceac76f5f9b9dfc4c5`
+        `https://newsapi.org/v2/everything?q=${searchValue}&from=2023-08-13&sortBy=publishedAt&apiKey=${apiKey}`
       )
       .then((response) => {
         console.log(response);
