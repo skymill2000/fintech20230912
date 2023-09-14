@@ -1,12 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderComponent from "../components/HeaderComponent";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+import queryString from "query-string";
 
 const Balance = () => {
+  const queryParams = useLocation().search;
+  const parsed = queryString.parse(queryParams);
+  const fintechNo = parsed.fintechUseNo;
+
+  const [balance, setBalance] = useState("0");
   useEffect(() => {
     getBalance();
   }, []);
   const getBalance = () => {
-    //잔액조회 리퀘스트 작성하기
+    const accessToken = localStorage.getItem("accessToken");
+    let requestOption = {
+      url: "/v2.0/account/balance/fin_num",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      params: {
+        bank_tran_id: genTrasId(),
+        fintech_use_num: fintechNo,
+        tran_dtime: "20230914103600",
+      },
+    };
+
+    axios(requestOption).then((response) => {
+      console.log(response);
+      setBalance(response.data.balance_amt);
+    });
   };
 
   function generateRandom9DigitNumber() {
@@ -25,6 +51,7 @@ const Balance = () => {
   return (
     <div>
       <HeaderComponent title={"잔액조회 / 거래내역"}></HeaderComponent>
+      {balance}
     </div>
   );
 };
