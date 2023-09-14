@@ -80,7 +80,51 @@ const ModalCard = ({ bankName, fintechUseNo, tofintechno }) => {
     axios(option).then(({ data }) => {
       console.log(data);
       if (data.rsp_code === "A0000") {
-        alert("출금 완료");
+        deposit();
+      }
+    });
+  };
+
+  const deposit = () => {
+    const twoLeggedToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJNMjAyMzAwNDQwIiwic2NvcGUiOlsib29iIl0sImlzcyI6Imh0dHBzOi8vd3d3Lm9wZW5iYW5raW5nLm9yLmtyIiwiZXhwIjoxNzAyNDU0NzA2LCJqdGkiOiI2NGIzZDhlZi1kNjE1LTQ1YmEtOWNmNC0wNTNiN2FmOWI4ZDYifQ.UsJS8pJH-xW9OPqlhXZiOzyCul7pcjw6T3KgpWKLvy4";
+    const data = {
+      cntr_account_type: "N",
+      cntr_account_num: "200000000001",
+      wd_pass_phrase: "NONE",
+      wd_print_content: "환불금액",
+      name_check_option: "off",
+      tran_dtime: "20220812130000",
+      req_cnt: "1",
+      req_list: [
+        {
+          tran_no: "1",
+          bank_tran_id: genTransId(),
+          fintech_use_num: tofintechno,
+          print_content: "오픈서비스캐시백",
+          tran_amt: amount,
+          req_client_name: "유관우",
+          req_client_fintech_use_num: fintechUseNo,
+          req_client_num: "1234",
+          transfer_purpose: "ST",
+        },
+      ],
+    };
+    const option = {
+      method: "POST",
+      url: "/v2.0/transfer/deposit/fin_num",
+      headers: {
+        Authorization: `Bearer ${twoLeggedToken}`,
+      },
+      data: data,
+    };
+
+    axios(option).then(({ data }) => {
+      console.log(data);
+      if (data.rsp_code === "A0000" || data.rsp_code === "A0015") {
+        alert("결제 완료 !");
+      } else {
+        alert("입금실패 !");
       }
     });
   };
