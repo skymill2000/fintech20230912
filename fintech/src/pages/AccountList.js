@@ -12,16 +12,17 @@ const AccountList = () => {
   }, []);
 
   const getAccountList = () => {
+    const accessToken = localStorage.getItem("accessToken");
+    const userSeqNo = localStorage.getItem("userSeqNo");
     let requestOption = {
       url: "/v2.0/user/me",
       method: "GET",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAwMDM0NzM2Iiwic2NvcGUiOlsiaW5xdWlyeSIsImxvZ2luIiwidHJhbnNmZXIiXSwiaXNzIjoiaHR0cHM6Ly93d3cub3BlbmJhbmtpbmcub3Iua3IiLCJleHAiOjE3MDIzNjI5MzIsImp0aSI6IjZkYThhM2U3LWViNTEtNDk5My1hNGQ1LThhYTQ4MGRkYzEzYiJ9.szHUUj8K8vmJvbfI_g1-2vGlOA20dAK9GyygP7-DPwc",
+        Authorization: `Bearer ${accessToken}`,
       },
       params: {
-        user_seq_no: "1100034736",
+        user_seq_no: userSeqNo,
       },
     };
 
