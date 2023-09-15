@@ -72,8 +72,31 @@ const sha256Enc = (plainText, key) => {
   return hash;
 };
 
-app.get("/authResult", auth, (req, res) => {
+app.get("/authResult", (req, res) => {
   const authCode = req.query.code;
+  let requestOption = {
+    url: "https://testapi.openbanking.or.kr/oauth/2.0/token",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+    },
+    data: {
+      code: authCode,
+      client_id: process.env.FINTECH_CLIENT_ID,
+      client_secret: process.env.FINTECH_CLIENT_SECRET,
+      redirect_uri: "http://localhost:4000/authResult",
+      grant_type: "authorization_code",
+    },
+  };
+  axios(requestOption).then(({ data }) => {
+    if (data.rsp_code !== "O0001") {
+      console.log(data);
+    } else {
+      console.log(data);
+    }
+  });
 });
+
+app.get("/accountList", auth, (req, res) => {});
 
 app.listen(process.env.PORT);
