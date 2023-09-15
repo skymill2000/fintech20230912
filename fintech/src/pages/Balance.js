@@ -18,52 +18,24 @@ const Balance = () => {
     getTransactionList();
   }, []);
   const getBalance = () => {
-    const accessToken = localStorage.getItem("accessToken");
+    const ourToken = localStorage.getItem("ourtoken");
     let requestOption = {
-      url: "/v2.0/account/balance/fin_num",
+      url: "/balance",
       method: "GET",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        Authorization: `Bearer ${accessToken}`,
+        ourtoken: ourToken,
       },
       params: {
-        bank_tran_id: genTrasId(),
-        fintech_use_num: fintechNo,
-        tran_dtime: "20230914103600",
+        fintechUseNo: fintechNo,
       },
     };
-
     axios(requestOption).then((response) => {
       console.log(response);
       setBalance(response.data);
     });
   };
 
-  const getTransactionList = () => {
-    const accessToken = localStorage.getItem("accessToken");
-    let requestOption = {
-      url: "/v2.0/account/transaction_list/fin_num",
-      method: "GET",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      params: {
-        bank_tran_id: genTrasId(),
-        fintech_use_num: fintechNo,
-        inquiry_type: "A",
-        inquiry_base: "D",
-        from_date: "20230912",
-        to_date: "20230914",
-        sort_order: "A",
-        tran_dtime: "20230914103600",
-      },
-    };
-
-    axios(requestOption).then(({ data }) => {
-      setTrasactionList(data.res_list);
-    });
-  };
+  const getTransactionList = () => {};
 
   function generateRandom9DigitNumber() {
     const min = 100000000; // Minimum value (smallest 9-digit number)

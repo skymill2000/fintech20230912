@@ -1,15 +1,13 @@
 from selenium import webdriver
+import chromedriver_autoinstaller
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
-option = webdriver.ChromeOptions()
-option.add_experimental_option('detach', True)
+chromedriver_autoinstaller.install()
+driver = webdriver.Chrome()
 
-driver = webdriver.Chrome(options=option)
 
 driver.get('https://www.eum.go.kr/web/am/amMain.jsp')
-
-#서울특별시 서대문구 북가좌동 일반 456번지 공시 지가를 조회해주세요
 
 sido = Select(driver.find_element(By.XPATH,'//*[@id="selSido"]'))
 sido.select_by_visible_text('서울특별시')
