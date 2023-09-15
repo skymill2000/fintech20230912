@@ -4,6 +4,7 @@ const mysql = require("mysql2");
 var jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const auth = require("./lib/auth");
+const axios = require("axios");
 const app = express();
 
 dotenv.config();
@@ -70,5 +71,9 @@ const sha256Enc = (plainText, key) => {
     .digest("base64");
   return hash;
 };
+
+app.get("/authResult", auth, (req, res) => {
+  const authCode = req.query.code;
+});
 
 app.listen(process.env.PORT);
