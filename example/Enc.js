@@ -9,6 +9,8 @@ const sha256Enc = (plainText, key) => {
   return hash;
 };
 
+console.log(sha256Enc("1234", "fintech"));
+
 const AESEncrypt = (plainTxt) => {
   const algorithm = "aes-256-cbc";
   const key = "H3uVnnOnNIXXsH63CsgswUsmICSCdVsn";

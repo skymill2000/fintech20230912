@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mysql = require("mysql2");
 var jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
 const app = express();
 
@@ -32,7 +33,8 @@ app.post("/login", (req, res) => {
   connection.query(sql, [userAccount], (err, result) => {
     if (err) throw err;
     console.log(result);
-    if (password === result[0].user_password) {
+    let encPassword = sha256Enc(password, "fintech");
+    if (encPassword === result[0].user_password) {
       let tokenKey = "f@i#n%tne#ckfhlafkd0102test!@#%";
       jwt.sign(
         {
@@ -53,8 +55,19 @@ app.post("/login", (req, res) => {
           res.json(token);
         }
       );
+    } else {
+      res.json("비밀번호 다릅니다.");
     }
   });
 });
+
+const sha256Enc = (plainText, key) => {
+  const secret = key;
+  const hash = crypto
+    .createHmac("sha256", secret)
+    .update(plainText)
+    .digest("base64");
+  return hash;
+};
 
 app.listen(process.env.PORT);
