@@ -29,5 +29,6 @@ const AESDecrypt = (plainTxt) => {
   decrypted += cipher.final("utf-8");
   console.log(decrypted);
 };
+
 AESEncrypt("!Kwic123테스트");
 AESDecrypt("b3Bu7QBZ0q96+f2GY2NQmaT1XnZElI1+wRdSHBOY01s=");
