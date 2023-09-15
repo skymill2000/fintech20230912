@@ -97,6 +97,31 @@ app.get("/authResult", (req, res) => {
   });
 });
 
-app.get("/accountList", auth, (req, res) => {});
+app.get("/account", auth, (req, res) => {
+  let { userId } = req.decoded;
+  console.log(req.decoded);
+  const sql = "SELECT * FROM user WHERE user_id = ?";
+  connection.query(sql, [userId], function (err, result) {
+    console.log(result);
+    const accesstoken = result[0].access_token;
+    const userSeqNo = result[0].user_seq_no;
+    console.log(accesstoken);
+    const sendData = {
+      user_seq_no: userSeqNo,
+    };
+    const option = {
+      method: "GET",
+      url: "https://testapi.openbanking.or.kr/v2.0/user/me",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        Authorization: `Bearer ${accesstoken}`,
+      },
+      params: sendData,
+    };
+    axios(option).then(({ data }) => {
+      res.json(data);
+    });
+  });
+});
 
 app.listen(process.env.PORT);

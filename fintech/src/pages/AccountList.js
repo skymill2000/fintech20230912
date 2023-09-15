@@ -12,17 +12,12 @@ const AccountList = () => {
   }, []);
 
   const getAccountList = () => {
-    const accessToken = localStorage.getItem("accessToken");
-    const userSeqNo = localStorage.getItem("userSeqNo");
+    const ourtoken = localStorage.getItem("ourtoken");
     let requestOption = {
-      url: "/v2.0/user/me",
+      url: "/account",
       method: "GET",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      params: {
-        user_seq_no: userSeqNo,
+        ourtoken: ourtoken,
       },
     };
 
