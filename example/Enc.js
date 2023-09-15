@@ -19,8 +19,15 @@ const AESEncrypt = (plainTxt) => {
   console.log(encrypted);
   return encrypted;
 };
+
 const AESDecrypt = (plainTxt) => {
   const algorithm = "aes-256-cbc";
   const key = "H3uVnnOnNIXXsH63CsgswUsmICSCdVsn";
   const iv = "dwUgwmwOndnJOmOX";
+  const cipher = crypto.createDecipheriv(algorithm, key, iv);
+  let decrypted = cipher.update(plainTxt, "base64", "utf8");
+  decrypted += cipher.final("utf-8");
+  console.log(decrypted);
 };
+AESEncrypt("!Kwic123테스트");
+AESDecrypt("b3Bu7QBZ0q96+f2GY2NQmaT1XnZElI1+wRdSHBOY01s=");
